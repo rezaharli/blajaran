@@ -6,44 +6,7 @@ class Login extends MX_Controller {
 	{
 		$data['main_content'] = 'login_form';
 		$this->load->view('includes/template', $data);		
-	}
-	
-	function is_logged_in()
-	{
-		$is_logged_in = $this->session->userdata('is_logged_in');
-		if(!isset($is_logged_in) || $is_logged_in != true)
-		{
-			echo 'You don\'t have permission to access this page. <a href="../login">Login</a>';	
-			die();		
-			//$this->load->view('login_form');
-		}		
 	}	
-	
-	function validate_credentials()
-	{		
-		$this->load->model('membership_model');
-		$query = $this->membership_model->validate();
-		
-		if($query) // if the user's credentials validated...
-		{
-			$data = array(
-				'username' => $this->input->post('username'),
-				'is_logged_in' => true
-			);
-			$this->session->set_userdata($data);
-			redirect('site/members_area');
-		}
-		else // incorrect username or password
-		{
-			$this->index();
-		}
-	}	
-	
-	function signup()
-	{
-		$data['main_content'] = 'signup_form';
-		$this->load->view('includes/template', $data);
-	}
 	
 	function create_member()
 	{
@@ -79,11 +42,74 @@ class Login extends MX_Controller {
 		}
 		
 	}
+
+	function cp()
+	{
+	    if( $this->session->userdata('username') )
+	    {
+	        // load the model for this controller
+	        $this->load->model('membership_model');
+	        // Get User Details from Database
+	        $user = $this->membership_model->get_member_details();
+	        if( !$user )
+	        {
+	            // No user found
+	            return false;
+	        }
+	        else
+	        {
+	            // display our widget
+	            $this->load->view('user_widget', $user);
+	        }           
+	    }
+	    else
+	    {
+	        // There is no session so we return nothing
+	        return false;
+	    }
+	}
+	
+	function is_logged_in()
+	{
+		$is_logged_in = $this->session->userdata('is_logged_in');
+		if(!isset($is_logged_in) || $is_logged_in != true)
+		{
+			echo 'You don\'t have permission to access this page. <a href="../login">Login</a>';	
+			die();		
+			//$this->load->view('login_form');
+		}		
+	}
 	
 	function logout()
 	{
 		$this->session->sess_destroy();
 		$this->index();
+	}
+	
+	function signup()
+	{
+		$data['main_content'] = 'signup_form';
+		$this->load->view('includes/template', $data);
+	}
+	
+	function validate_credentials()
+	{		
+		$this->load->model('membership_model');
+		$query = $this->membership_model->validate();
+
+		if($query) // if the user's credentials validated...
+		{
+			$data = array(
+				'username' => $this->input->post('username'),
+				'is_logged_in' => true
+			);
+			$this->session->set_userdata($data);
+			redirect('site/members_area');
+		}
+		else // incorrect username or password
+		{
+			$this->index();
+		}
 	}
 
 }
