@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2016 at 08:19 AM
+-- Generation Time: May 16, 2016 at 09:19 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.4
 
@@ -36,18 +36,20 @@ CREATE TABLE `membership` (
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `membership`
+-- Indexes for table `membership`
 --
+ALTER TABLE `membership`
+  ADD PRIMARY KEY (`id`);
 
-INSERT INTO `membership` (`id`, `first_name`, `last_name`, `email_address`, `username`, `password`) VALUES
-(1, 'Kakak', 'Pertama', 'kaka.pertama@kerasakti.com', 'admin', '21232f297a57a5a743894a0e4a801fc3'),
-(2, 'a', 'a', 'a@aa.com', 'aaaa', '74b87337454200d4d33f80c4663dc5e5');
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
 --
 -- AUTO_INCREMENT for table `membership`
 --
 ALTER TABLE `membership`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
